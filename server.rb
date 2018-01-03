@@ -32,8 +32,17 @@ class Question
 		for i in 0..2
 			incorrect_answer = rand(@to - @from + 1) + @from
 
-			while incorrect_answer == @correct_answer do
-				incorrect_answer = rand(@to - @from + 1) + @from
+			# If range is greater or equal to 3, make all the answers different from each other
+			# This can definitely be made to work more efficiently
+			if @to - @from >= 3
+				while incorrect_answer == @correct_answer or @incorrect_answers.include?(incorrect_answer) do
+					incorrect_answer = rand(@to - @from + 1) + @from
+				end
+			# If range is either 1 or 2, do not care about the answers being different
+			else
+				while incorrect_answer == @correct_answer do
+					incorrect_answer = rand(@to - @from + 1) + @from
+				end
 			end
 
 			@incorrect_answers[i] = incorrect_answer
